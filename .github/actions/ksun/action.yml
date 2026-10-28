@@ -21,8 +21,11 @@ runs:
       shell: bash
       run: |
         cd "$COMMON"
-        # Pinned: KernelSU-Next v3.4.2, version 33355 (UAPI 5), as in 2.3.0-r4
-        curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/4c706b5938665866ebe16944a481a7b91e3396af/kernel/setup.sh" | bash -s 4c706b5938665866ebe16944a481a7b91e3396af
+        # Pinned to 2.3.0-r4: code from dev-susfs at 910864d (force-pushed away
+        # later, so fetched by hash); version 33355 is counted from dev at 4c706b5.
+        curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/910864db701e92859b68761fcc6cd7a134061fff/kernel/setup.sh" | bash -s dev-susfs
+        git -C KernelSU-Next fetch origin 910864db701e92859b68761fcc6cd7a134061fff 4c706b5938665866ebe16944a481a7b91e3396af
+        git -C KernelSU-Next checkout -q 910864db701e92859b68761fcc6cd7a134061fff
 
     - name: enable in defconfig
       if: inputs.susfs == 'false'
