@@ -9,7 +9,9 @@ runs:
      run: |
       cd "$COMMON"
       echo "Adding BBG..."
-      curl -LSs https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh | bash
+      # Pinned to the state used by 2.3.0-r4 (setup.sh only checks out a ref in an existing clone)
+      git clone https://github.com/vc-teahouse/Baseband-guard Baseband-guard
+      curl -LSs https://github.com/vc-teahouse/Baseband-guard/raw/a54e0dc6cf0aff4dd87fec49644a02d2eb612905/setup.sh | bash -s a54e0dc6cf0aff4dd87fec49644a02d2eb612905
       
    - name: enable bbg in defconfig
      shell: bash

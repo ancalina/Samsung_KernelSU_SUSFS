@@ -1,0 +1,10 @@
+name: add ancal splash
+description: blank the bootloader's official-software warning on SM-S918x early in boot
+runs:
+  using: composite
+  steps:
+   - name: add built-in driver
+     shell: bash
+     run: |
+      cp "$GITHUB_WORKSPACE/ancal/ancal_splash.c" "$COMMON/drivers/misc/"
+      echo 'obj-y += ancal_splash.o' >> "$COMMON/drivers/misc/Makefile"

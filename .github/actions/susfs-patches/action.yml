@@ -18,8 +18,10 @@ runs:
       git config --global user.email "41898282+github-actions[bot]@://github.com"
       
       cd susfs4ksu
+      # Pinned to the SUSFS v2.3.0 state used by 2.3.0-r4
+      git checkout -q bd27d727b27fc90bfbb6eaccd28060a53c473266
       git fetch https://gitlab.com/pershoot/susfs4ksu.git gki-android14-6.1-dev
-      git log ..FETCH_HEAD --oneline -n 2 | awk '{print $1}' | tac | xargs git cherry-pick
+      git log ..5192aa2d33b381b58c1051532f9e1dfa5de6e8d3 --oneline -n 2 | awk '{print $1}' | tac | xargs git cherry-pick
       
       #cd susfs4ksu
       #if [[ "$ANDROID_VER-$KERNEL_VER" == "android12-5.10" ]]; then

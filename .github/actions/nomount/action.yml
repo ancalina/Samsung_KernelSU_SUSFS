@@ -8,7 +8,8 @@ runs:
      shell: bash
      run: |
       cd "$COMMON"
-      curl https://raw.githubusercontent.com/maxsteeel/nomount/refs/heads/dev/kernel/setup.sh | bash -
+      # Pinned to the state used by 2.3.0-r4
+      curl https://raw.githubusercontent.com/maxsteeel/nomount/682f7b20bc3c177871c80bbd02c600e472f0df46/kernel/setup.sh | bash -s 682f7b20bc3c177871c80bbd02c600e472f0df46
 
    - name: add to defconfig
      shell: bash

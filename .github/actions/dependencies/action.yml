@@ -11,3 +11,6 @@ runs:
      
      git clone https://github.com/WildKernels/kernel_patches.git
      git clone https://github.com/WildKernels/AnyKernel3.git -b "$ANYKERNEL_BRANCH"
+     # Pinned to the state used by 2.3.0-r4
+     git -C kernel_patches checkout -q 41ae18b35d20e0c6ac04116785a4a1089528ae94
+     git -C AnyKernel3 checkout -q e1e9dce98430c5c6f231f7094a8c7f4ecaf50948

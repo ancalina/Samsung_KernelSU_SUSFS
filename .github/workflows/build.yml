@@ -252,6 +252,9 @@ jobs:
         if: ${{ env.KERNEL_VER == '6.6' }}
         uses: ./.github/actions/6.6-fix
 
+      - name: Add Ancal splash warning blanking
+        uses: ./.github/actions/ancal-splash
+
       - name: Set Kernel Configuration Variables
         if: inputs.ksun == 'true'
         uses: ./.github/actions/configs

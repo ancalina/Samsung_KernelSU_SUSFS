@@ -8,3 +8,6 @@ runs:
      shell: bash
      run: |
       git clone --depth 1 -b $BRANCH --single-branch https://github.com/WildKernels/Samsung_Kernels.git $CONFIG
+      # Pinned to the source used by 2.3.0-r4
+      git -C $CONFIG fetch --depth 1 origin cbaa6b3d5a28e8a023aa4504c1726329bd6d867a
+      git -C $CONFIG checkout -q cbaa6b3d5a28e8a023aa4504c1726329bd6d867a
