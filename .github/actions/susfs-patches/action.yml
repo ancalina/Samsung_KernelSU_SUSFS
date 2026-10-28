@@ -11,17 +11,20 @@ runs:
    - name: clone susfs
      shell: bash
      run: |
-      SUSFS_BRANCH="gki-$ANDROID_VER-$KERNEL_VER"
-      git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "$SUSFS_BRANCH"
-
       git config --global user.name "github-actions[bot]"
       git config --global user.email "41898282+github-actions[bot]@://github.com"
-      
+
+      # Pinned to the SUSFS v2.3.0 state used by 2.3.0-r4: gki-android13-5.15 at
+      # bd27d72 plus the two commits r4 cherry-picked from pershoot's
+      # gki-android14-6.1-dev. Shallow fetches with retries, because full GitLab
+      # clones can hang while GitLab is under load.
+      fetch() { for i in 1 2 3 4 5; do timeout 300 git fetch --depth "$1" "$2" "$3" && return; echo "fetch retry $i"; sleep 60; done; return 1; }
+      git init -q susfs4ksu
       cd susfs4ksu
-      # Pinned to the SUSFS v2.3.0 state used by 2.3.0-r4
-      git checkout -q bd27d727b27fc90bfbb6eaccd28060a53c473266
-      git fetch https://gitlab.com/pershoot/susfs4ksu.git gki-android14-6.1-dev
-      git log ..5192aa2d33b381b58c1051532f9e1dfa5de6e8d3 --oneline -n 2 | awk '{print $1}' | tac | xargs git cherry-pick
+      fetch 1 https://gitlab.com/simonpunk/susfs4ksu.git bd27d727b27fc90bfbb6eaccd28060a53c473266
+      git checkout -q FETCH_HEAD
+      fetch 3 https://gitlab.com/pershoot/susfs4ksu.git 5192aa2d33b381b58c1051532f9e1dfa5de6e8d3
+      git cherry-pick 17dc6b683b26e036242bfcfe86b33c5982590237 5192aa2d33b381b58c1051532f9e1dfa5de6e8d3
       
       #cd susfs4ksu
       #if [[ "$ANDROID_VER-$KERNEL_VER" == "android12-5.10" ]]; then
